@@ -1,5 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
-    
+  
     // 1. 雙語切換邏輯 (Language Toggle)
     const langBtn = document.getElementById('lang-toggle');
     if (langBtn) {
@@ -74,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 600);
     });
 
-});
+
 
 // 5. Off-Screen 曲面畫廊 (CoverFlow) - 無限循環版
     const sliders = document.querySelectorAll('.gallery-slider');
