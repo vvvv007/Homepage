@@ -1,4 +1,5 @@
-  
+document.addEventListener('DOMContentLoaded', () => {
+    
     // 1. 雙語切換邏輯 (Language Toggle)
     const langBtn = document.getElementById('lang-toggle');
     if (langBtn) {
@@ -163,14 +164,46 @@
         
         // 延遲一點開始，確保初始定位完成
         setTimeout(startAutoPlay, 500);
+    });
 
-        // --- 新增：工作經歷點擊下拉邏輯 (Accordion) ---
+    // --- 新增：工作經歷與其他區塊的點擊下拉手風琴邏輯 ---
     const accordionHeaders = document.querySelectorAll('.accordion-header');
     accordionHeaders.forEach(header => {
         header.addEventListener('click', () => {
             const item = header.parentElement;
-            // 點擊時，切換 active 狀態
             item.classList.toggle('open');
         });
     });
-    });
+    // --- 新增：Vibe Coding 預覽切換邏輯 ---
+    const vibeCards = document.querySelectorAll('.vibe-card');
+    const vibeIframe = document.getElementById('vibe-iframe');
+    const vibeImagePreview = document.getElementById('vibe-image-preview');
+
+    if (vibeCards.length > 0 && vibeIframe) {
+        vibeCards.forEach(card => {
+            card.addEventListener('click', () => {
+                // 1. 移除所有卡片的 active 狀態
+                vibeCards.forEach(c => c.classList.remove('active'));
+                
+                // 2. 為當前點擊的卡片加上 active
+                card.classList.add('active');
+                
+                // 3. 獲取網址並更新右側 iframe
+                const url = card.getAttribute('data-url');
+                
+                // === 關鍵切換邏輯 ===
+                if (url === 'pending') {
+                    // ✨ 如果是 Meditation Space：顯示圖片，隱藏 iframe
+                    vibeIframe.style.display = 'none';
+                    vibeImagePreview.style.display = 'block';
+                } else {
+                    // ✨ 如果是其他專案：顯示 iframe，隱藏圖片，並更新網址
+                    vibeImagePreview.style.display = 'none';
+                    vibeIframe.style.display = 'block';
+                    vibeIframe.src = url;
+                }
+            });
+        });
+    }
+
+});
