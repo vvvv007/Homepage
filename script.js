@@ -192,10 +192,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 const url = card.getAttribute('data-url');
                 
                 // === 關鍵切換邏輯 ===
-                if (url === 'pending') {
+                if (url === 'pending'|| url === 'image-provex') {
                     // ✨ 如果是 Meditation Space：顯示圖片，隱藏 iframe
                     vibeIframe.style.display = 'none';
                     vibeImagePreview.style.display = 'block';
+                    // 根據不同專案切換不同圖片
+                    if(url === 'image-provex') {
+                        vibeImagePreview.querySelector('img').src = "images/provex-preview.png";
+                    } else {
+                        vibeImagePreview.querySelector('img').src = "images/meditation-preview.png";
+                    }
+                
+                
+                
                 } else {
                     // ✨ 如果是其他專案：顯示 iframe，隱藏圖片，並更新網址
                     vibeImagePreview.style.display = 'none';
