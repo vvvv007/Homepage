@@ -10,6 +10,7 @@
 }
 
 html { scroll-behavior: smooth; }
+
 /* === 全局 Emoji 鼠標設定 === */
 
 /* 1. 讓整個網站的預設鼠標變成 👆 */
@@ -193,6 +194,8 @@ nav {
     border-radius: 12px; overflow: hidden; backdrop-filter: blur(10px);
 }
 
+
+
 /* 標題區塊：加入鼠標指針與 hover 效果 */
 .accordion-header {
     padding: 1.5rem 2rem; display: flex; justify-content: space-between;
@@ -216,6 +219,9 @@ nav {
     display: none; padding: 0 2rem 1.5rem 2rem;
     border-top: 1px solid var(--border); margin-top: 0.5rem; padding-top: 1rem;
     animation: slideDownFade 0.4s ease-out forwards;
+}
+.accordion-content p {
+    margin-bottom: 0.8rem;
 }
 
 /* 當卡片被標記為 active 時，顯示下方內容 */
@@ -244,6 +250,8 @@ nav {
 .edu-block { margin-bottom: 2rem; border-bottom: 1px dashed var(--border); padding-bottom: 1.5rem; }
 .edu-block:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
 .edu-block h3 { color: #334155; margin-top: 0; }
+
+
 
 /* === 職涯地圖 Journey Map === */
 .journey-map { position: relative; height: 2px; background: var(--border); margin: 80px 20px; display: flex; justify-content: space-between; }
@@ -402,4 +410,162 @@ nav {
     background-color: var(--accent);
     color: #fff;
     border-color: var(--accent);
+}
+
+/* === Vibe Coding Side Projects === */
+.vibe-coding-section {
+    margin-top: -3rem;
+
+/* ✨ 破格魔法：無視父層寬度限制，強制加寬 ✨ */
+    width: 90vw; /* 讓它佔據整個螢幕寬度的 90% */
+    max-width: 900px; /* 設定一個最大極限，避免在超大螢幕上變得太誇張 */
+    
+    /* 強制重新居中對齊 */
+    position: relative;
+    left: 0%;
+    transform: translateX(-0%);
+}   
+.vibe-title {
+    color: var(--text-main);
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+/* 左右分欄排版 */
+.vibe-container {
+    display: flex;
+    gap: 2rem;
+    align-items: stretch; /* ✨ 關鍵：讓右邊視窗自動拉伸，和左邊卡片群的底部完美對齊 */
+}
+
+/* 左側邊欄 */
+.vibe-sidebar {
+    flex: 0 0 280px; /* 固定左側寬度 */
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    overflow-y: auto; /* 若項目變多可滾動 */
+    padding-right: 0.5rem;
+}
+
+/* 左側專案卡片按鈕 */
+.vibe-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.2rem;
+    text-align: left;
+    transition: all 0.3s ease;
+    /* 這裡不用 Emoji 鼠標也可以，但如果想保持極客風格，就不特別覆蓋它 */
+}
+
+/* 懸停與選中狀態 */
+.vibe-card:hover, .vibe-card.active {
+    background: rgba(142, 186, 165, 0.15); /* 莫蘭迪綠底色 */
+    border-color: var(--accent);
+    transform: translateX(5px); /* 選中時微微向右凸出 */
+}
+
+.vibe-card h4 {
+    margin: 0 0 0.4rem 0;
+    font-size: 1.1rem;
+    color: var(--text-main);
+}
+
+.vibe-card p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+/* 右側預覽視窗 */
+.vibe-preview-window {
+    flex: 1; /* 佔滿剩餘空間 */
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    position:relative;
+}
+
+/* 偽裝瀏覽器頂部 */
+.browser-header {
+    background: #f8fafc;
+    padding: 0.6rem 1rem;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 8px;
+}
+
+.mac-dot {
+    width: 12px; 
+    height: 12px; 
+    border-radius: 50%;
+}
+.mac-dot.red { background: #ff5f56; }
+.mac-dot.yellow { background: #ffbd2e; }
+.mac-dot.green { background: #27c93f; }
+
+/* ✨ 新增：圖片預覽容器樣式 ✨ */
+.vibe-image-preview {
+    /* 配合父層的相對定位 */
+    position: absolute;
+    top: 30px; /* 扣除 Mac 導航欄高度 */
+    left: 0;
+    width: 100%;
+    height: calc(100% - 30px); /* 填滿剩餘高度 */
+    background: #fff; /* 圖片載入前的底色 */
+    overflow: hidden;
+}
+
+.vibe-image-preview img {
+    width: 100%;
+    height: 100%;
+    /* ✨ 關鍵：確保圖片填滿容器且不變形 */
+    object-fit: cover; 
+    /* 如果你的圖片是完整的網頁長圖，可以使用 object-position: top 讓它從頂部開始顯示 */
+    object-position: top; 
+}
+
+/* === 畫中畫本體：縮放魔法 === */
+#vibe-iframe {
+    position: absolute;
+    top: 30px; /* 避開頂部 Mac 圓點導航欄的厚度 */
+    left: 0;
+    /* 如果我們想把內容縮小到 80% (0.8) 
+       寬高就要反向放大： 1 / 0.8 = 1.25 (也就是 125%)
+    */
+    width: 133%;      /* 內部畫布加寬 */
+    height: 133%;     /* 內部畫布加高 */
+    flex: 1; /* 填滿剩下的高度 */
+    
+    /* 視覺上整體縮小到 80% */
+    transform: scale(0.75); 
+    transform-origin: top left; /* 必須從左上角開始對齊縮放 */
+    
+    border: none;
+    background: #f1f5f9;
+}
+
+/* 手機版適配：變成上下排列 */
+@media (max-width: 992px) {
+    .vibe-container {
+        flex-direction: column;
+        height: auto;
+    }
+    .vibe-sidebar {
+        flex: auto;
+        flex-direction: row; /* 手機上改為橫向滑動 */
+        overflow-x: auto;
+        padding-bottom: 1rem;
+    }
+    .vibe-card {
+        min-width: 200px; /* 防止被擠壓 */
+    }
+    .vibe-preview-window {
+        height: 400px; /* 手機上給予固定高度 */
+    }
 }
